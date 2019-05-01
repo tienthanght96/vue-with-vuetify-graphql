@@ -17,27 +17,7 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
-      path: '/signin',
-      name: 'signin',
-      component: () => import('./views/SignIn.vue'),
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('./views/SignUp.vue'),
-      beforeEnter: AuthGuard
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: () => import('./views/Profile.vue'),
-      beforeEnter: AuthGuard
     },
     {
       path: '/posts',
@@ -48,7 +28,24 @@ export default new Router({
       path: '/post/add',
       name: 'addpost',
       component: () => import('./views/AddPost.vue'),
-      beforeEnter: AuthGuard
+      beforeEnter: AuthGuard,
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: () => import('./views/SignIn.vue'),
+      
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('./views/SignUp.vue'),
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('./views/Profile.vue'),
+      beforeEnter: AuthGuard,
     },
   ]
 })

@@ -6,8 +6,6 @@
         <h1>Welcome Back!</h1>
       </v-flex>
     </v-layout>
-
-
     <!-- Error Alert -->
     <v-layout v-if="error" row wrap>
       <v-flex xs12 sm6 offset-sm3>
@@ -64,19 +62,6 @@
         isFormValid: true,
         username: "",
         password: "",
-        // usernameRules: [
-        //   // Check if username in input
-        //   username => !!username || "Username is required",
-        //   // Make sure username is less than 10 characters
-        //   username =>
-        //     username.length < 10 || "Username must be less than 10 characters"
-        // ],
-        // passwordRules: [
-        //   password => !!password || "Password is required",
-        //   // Make sure password is at least 7 characters
-        //   password =>
-        //     password.length >= 4 || "Password must be at least 4 characters"
-        // ]
       };
     },
     computed: {
@@ -84,7 +69,6 @@
     },
     watch: {
       user(value) {
-      console.log('1223', value)
         // if user value changes, redirect to home page
         if (value) {
           this.$router.push("/");
@@ -100,7 +84,11 @@
         });
       }
     },
-    
+    created() {
+      if(this.user) {
+        this.$router.push("/");
+      }
+    },
   }
 </script>
 

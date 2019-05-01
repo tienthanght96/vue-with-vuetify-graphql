@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import router from './router';
 
 import { defaultClient as apolloClient } from './main';
-import { GET_POSTS_QUERY, SIGNIN_USER_MUTATION, GET_CURRENT_USER_QUERY } from './graphql';
+import { GET_POSTS_QUERY, SIGNIN_USER_MUTATION, GET_CURRENT_USER_QUERY, SIGNUP_USER_MUTATION, ADD_POST_MUTATION } from './graphql';
 
 Vue.use(Vuex)
 
@@ -25,7 +25,8 @@ export const actionTypes = {
   'signinUser': 'signinUser',
   'signupUser': 'signupUser',
   'getCurrentUser': 'getCurrentUser',
-  'signoutUser': 'signoutUser'
+  'signoutUser': 'signoutUser',
+  'addPost': 'addPost'
 } 
 
 export default new Vuex.Store({
@@ -111,6 +112,26 @@ export default new Vuex.Store({
         console.log(error)
       })
     },
+    [actionTypes.signupUser]: ({ commit },  { username, email, password }) => {
+      commit(mutationTypes.CLEAR_ERROR);
+      commit(mutationTypes.SET_LOADING, true);
+      localStorage.removeItem('token');
+      apolloClient.mutate({
+        mutation: SIGNUP_USER_MUTATION,
+        variables: { username, email, password }
+      })
+      .then(signinResponse => {
+        const { token } = signinResponse.data.signupUser;
+        localStorage.setItem("token",token);
+        commit(mutationTypes.SET_LOADING, false);
+        router.go();
+      })
+      .catch(error => {
+        commit(mutationTypes.SET_ERROR, error)
+        commit(mutationTypes.SET_LOADING, false);
+        console.log(error)
+      })
+    },
     [actionTypes.getCurrentUser]: ({ commit }) => {
       commit(mutationTypes.GET_CURRENT_USER_PENDING);
       apolloClient.query({
@@ -129,7 +150,22 @@ export default new Vuex.Store({
       localStorage.removeItem('token');
       await apolloClient.resetStore();
       router.push("/");
-    }
+    },
+    [actionTypes.addPost]: async ({ commit }, post) => {
+      commit(mutationTypes.SET_LOADING, true);
+      apolloClient.mutate({
+        mutation: ADD_POST_MUTATION,
+        variables: post
+      })
+      .then(({ data }) => {
+        commit(mutationTypes.SET_LOADING, false);
+        console.log('data', data)
+      })
+      .catch(error => {
+        commit(mutationTypes.SET_LOADING, false);
+        commit(mutationTypes.SET_ERROR, error);
+      })
+    },
   },
   getters: {
     posts: state => state.posts,
