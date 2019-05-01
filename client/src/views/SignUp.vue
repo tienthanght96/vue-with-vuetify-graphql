@@ -1,0 +1,15 @@
+<template>
+  <v-container>
+    <h1>Sign Up</h1>
+  </v-container>
+</template>
+
+<script>
+  export default {
+    name: 'signup'
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>
