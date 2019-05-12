@@ -47,7 +47,56 @@ export const INFINITE_SCROLL_POSTS_QUERY = gql`
   }
 `;
 
+export const GET_POST_QUERY = gql`
+  query($postId: ID!) {
+    getPost(postId: $postId) {
+      _id
+      title
+      imageUrl 
+      categories
+      description
+      likes
+      createdDate
+      messages {
+        _id
+        messageBody
+        messageUser {
+          _id
+          username
+          avatar
+        }
+      }
+    }
+  }
+`;
+
 /* Post mutation */
+
+export const LIKE_POST_MUTATION = gql`
+  mutation($postId: ID!, $username: String!) {
+    likePost(postId: $postId, username: $username) {
+      likes
+      favorites {
+        _id
+        title
+        imageUrl
+      }
+    }
+  }
+`;
+
+export const UNLIKE_POST_MUTATION = gql`
+  mutation($postId: ID!, $username: String!) {
+    unlikePost(postId: $postId, username: $username) {
+      likes
+      favorites {
+        _id
+        title
+        imageUrl
+      }
+    }
+  }
+`;
 
 export const ADD_POST_MUTATION = gql`
   mutation (
@@ -63,6 +112,25 @@ export const ADD_POST_MUTATION = gql`
       imageUrl
       categories
       description
+    }
+  }
+`;
+
+export const ADD_POST_MESSAGE_MUTATION = gql`
+  mutation($messageBody: String!, $userId: ID!, $postId: ID!) {
+    addPostMessage(
+      messageBody: $messageBody
+      userId: $userId
+      postId: $postId
+    ) {
+      _id
+      messageBody
+      messageDate
+      messageUser {
+        _id
+        avatar
+        # username
+      }
     }
   }
 `;

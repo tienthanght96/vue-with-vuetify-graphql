@@ -18,6 +18,7 @@ export const mutationTypes = {
   CLEAR_ERROR: 'CLEAR_ERROR',
   SET_LOADING: 'SET_LOADING',
   SET_AUTHERROR: 'SET_AUTHERROR',
+  SET_USER: 'SET_USER'
 }
 
 export const actionTypes = {
@@ -74,6 +75,9 @@ export default new Vuex.Store({
     },
     [mutationTypes.SET_LOADING]: (state, loading) => {
       state.loading = loading;
+    },
+    [mutationTypes.SET_USER]: (state, data) => {
+      state.user = payload;
     },
   },
   actions: {
