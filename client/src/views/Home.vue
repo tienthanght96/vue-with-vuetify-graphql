@@ -17,6 +17,7 @@
           v-for="(post) in posts"
           :key="post._id"
           :src="post.imageUrl"
+          @click.native="goToPost(post._id)"
         >
           <h1 class="carousel__title">{{ post.title }}</h1>
         </v-carousel-item>
@@ -36,7 +37,10 @@
     methods: {
       handleGetCarouselPosts() {
         this.$store.dispatch('getPosts');
-      }
+      },
+      goToPost(postId) {
+        this.$router.push(`/posts/${postId}`);
+      },
     },
     computed: {
       ...mapGetters(['posts', 'isLoadingPosts'])

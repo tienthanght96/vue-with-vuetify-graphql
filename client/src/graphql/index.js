@@ -29,17 +29,18 @@ export const INFINITE_SCROLL_POSTS_QUERY = gql`
       posts {
         _id
         title
-        createdDate
+        imageUrl
         categories
         description
         likes
-        imageUrl
+        createdDate
+        messages {
+          _id
+        }
         createdBy {
           _id
           username
-          email
-          password
-          joinDate
+          avatar
         }
       }
     }

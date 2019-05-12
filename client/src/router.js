@@ -25,6 +25,12 @@ export default new Router({
       component: () => import('./views/Posts.vue')
     },
     {
+      path: '/posts/:postId',
+      name: 'post',
+      component: () => import('./views/Post.vue'),
+      props: true
+    },
+    {
       path: '/post/add',
       name: 'addpost',
       component: () => import('./views/AddPost.vue'),
